@@ -1,15 +1,22 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "./firebase.init";
+import { useState } from "react";
 
 
 const Login = () => {
+  const [user , setUser] = useState(null)
     const provider = new GoogleAuthProvider()
     const handle = () => {
         console.log("o");
         signInWithPopup(auth, provider)
         .then(r => {
-          console.log(r);
-        });
+          console.log(r.user.email);
+          setUser(r.user)
+        })
+        .catch(err => {
+          console.log(err);
+          setUser(undefined)
+        })
     }
 
    
@@ -37,6 +44,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+     
       </div>
     );
 };
